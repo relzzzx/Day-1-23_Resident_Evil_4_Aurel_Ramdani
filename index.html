@@ -200,8 +200,58 @@
             box-shadow: 0 0 0 3px rgba(105, 88, 217, .12);
         }
 
+        .date-time-control input,
+        .date-time-control input:focus {
+            border: 0;
+            outline: 0;
+            background: transparent;
+            box-shadow: none;
+        }
+
         .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
         .field-row.single { grid-template-columns: 1fr; }
+        .date-time-control {
+            display: grid;
+            grid-template-columns: 18px minmax(0, 1fr);
+            align-items: center;
+            gap: 8px;
+            min-height: 43px;
+            padding: 0 10px;
+            border: 1px solid #d9d3c8;
+            border-radius: 2px;
+            background: #fffefa;
+            color: #898477;
+            transition: border-color .16s ease, box-shadow .16s ease;
+        }
+
+        .date-time-control:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(180, 73, 50, .12);
+        }
+
+        .date-time-control svg { width: 16px; height: 16px; }
+        .date-time-control input {
+            width: 100%;
+            min-width: 0;
+            min-height: 40px;
+            padding: 8px 0;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            color: var(--ink);
+            font-size: 12px;
+        }
+
+        .date-time-control input:focus { border: 0; box-shadow: none; }
+        .date-time-control input::-webkit-calendar-picker-indicator {
+            width: 17px;
+            height: 17px;
+            margin: 0 0 0 4px;
+            opacity: .68;
+            cursor: pointer;
+            filter: sepia(.35) saturate(1.7) hue-rotate(326deg);
+        }
+
         .file-control { padding: 8px !important; color: var(--muted) !important; font-size: 11px !important; }
         .file-control::file-selector-button {
             margin-right: 9px;
@@ -304,7 +354,6 @@
         .tag.group { background: #fff0f4; color: #b74970; }
         .tag.deadline { background: var(--accent-soft); color: var(--accent); }
         .tag.overdue { background: var(--red-soft); color: var(--red); }
-        .tag.soon { background: var(--amber-soft); color: var(--amber); }
         .tag.attachment { background: #eef6ff; color: #4270a8; }
         .task-actions { display: flex; gap: 4px; }
 
@@ -506,6 +555,14 @@
             box-shadow: 0 0 0 2px rgba(180, 73, 50, .12);
         }
 
+        .date-time-control input,
+        .date-time-control input:focus {
+            border: 0;
+            outline: 0;
+            background: transparent;
+            box-shadow: none;
+        }
+
         .field input::placeholder, .search-input::placeholder { color: #a39d91; }
         .field-row { gap: 10px; }
         .file-control::file-selector-button { border-radius: 2px; background: var(--accent-soft); color: var(--accent); }
@@ -575,9 +632,23 @@
         }
 
         .tag.group { border-color: #e9c9c0; background: #fbf0ec; color: #984432; }
-        .tag.deadline { border-color: #e6d0c8; background: #f8eeea; color: #984432; }
+        .tag.deadline { border-color: #d9d4c8; background: #f5f2ea; color: #615f54; }
+        .tag.today { border-color: #e2bd82; background: #f8edd8; color: #77501b; }
+        .tag.week-soon { border-color: #e6d0c8; background: #f8eeea; color: #984432; }
         .tag.overdue { border-color: #e5c4bc; background: #f8e9e5; color: #9c362b; }
-        .tag.soon { border-color: #e8d9b8; background: #f7f0e2; color: #79551f; }
+        .tag.today::before {
+            display: inline-grid;
+            width: 12px;
+            height: 12px;
+            place-items: center;
+            margin-right: 4px;
+            border-radius: 50%;
+            background: #77501b;
+            color: #f8edd8;
+            content: "!";
+            font-size: 9px;
+            font-weight: 800;
+        }
         .tag.attachment { border-color: #d7ddd2; background: #eef1e9; color: #4a6246; }
         .icon-button { border-radius: 2px; color: #898477; }
         .icon-button:hover { background: var(--red-soft); color: var(--red); }
@@ -638,7 +709,6 @@
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
             .hero, .stats, .workspace { animation: none; }
-            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
         }
     </style>
 </head>
@@ -695,11 +765,23 @@
                     <div class="field-row">
                         <label class="field">
                             <span class="field-label">Tanggal deadline</span>
-                            <input type="date" id="taskDate" name="taskDate">
+                            <span class="date-time-control">
+                                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                                    <rect x="3" y="5" width="14" height="12" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                                    <path d="M6.5 3.5v3M13.5 3.5v3M3.5 8.5h13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                </svg>
+                                <input type="date" id="taskDate" name="taskDate" aria-label="Tanggal deadline">
+                            </span>
                         </label>
                         <label class="field">
                             <span class="field-label">Jam <span class="optional">(opsional)</span></span>
-                            <input type="time" id="taskTime" name="taskTime">
+                            <span class="date-time-control">
+                                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                                    <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/>
+                                    <path d="M10 6v4.3l2.8 1.7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <input type="time" id="taskTime" name="taskTime" aria-label="Jam deadline">
+                            </span>
                         </label>
                     </div>
                     <div class="field-row single" id="typeRow">
@@ -875,6 +957,10 @@
         function getDeadlineState(task) {
             if (!task.date || task.completed) return null;
             const [year, month, day] = task.date.split('-').map(Number);
+            const now = new Date();
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const daysAway = Math.round((Date.UTC(year, month - 1, day) -
+                Date.UTC(today.getFullYear(), today.getMonth(), today.getDate())) / 86400000);
             const deadline = new Date(year, month - 1, day);
             if (task.time) {
                 const [hours, minutes] = task.time.split(':').map(Number);
@@ -882,12 +968,11 @@
             } else {
                 deadline.setHours(23, 59, 59, 999);
             }
-            const now = new Date();
             if (deadline < now) return { label: 'Terlambat', className: 'overdue' };
-            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-            const daysAway = Math.round((new Date(year, month - 1, day) - today) / 86400000);
-            if (daysAway <= 2) return { label: daysAway === 0 ? 'Hari ini' : 'Segera', className: 'soon' };
-            return { label: 'Deadline', className: 'deadline' };
+            if (daysAway === 0) return { label: 'Hari ini', className: 'today' };
+            if (daysAway < 7) return { label: 'Kurang dari 1 minggu', className: 'week-soon' };
+            if (daysAway === 7) return { label: '1 minggu lagi', className: 'deadline' };
+            return { label: 'Lebih dari 1 minggu', className: 'deadline' };
         }
 
         function createTag(text, className) {
