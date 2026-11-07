@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#f5f6fb">
+    <meta name="theme-color" content="#eee9df">
     <title>Ruang Tugas — Student Task Planner</title>
     <style>
         :root {
             color-scheme: light;
-            --ink: #24233a;
-            --muted: #77778c;
-            --line: #e9e9f1;
-            --surface: #fff;
-            --canvas: #f5f6fb;
-            --accent: #6958d9;
-            --accent-dark: #5544c5;
-            --accent-soft: #f0edff;
-            --green: #23845c;
-            --green-soft: #e8f7ef;
-            --amber: #a56a13;
-            --amber-soft: #fff4dc;
-            --red: #c34c5b;
-            --red-soft: #fff0f1;
-            --shadow: 0 16px 48px rgba(37, 35, 72, .07);
+            --ink: #26332e;
+            --muted: #716f65;
+            --line: #d7d0c3;
+            --surface: #fffdf8;
+            --canvas: #eee9df;
+            --accent: #b44932;
+            --accent-dark: #923a28;
+            --accent-soft: #f5e8e1;
+            --green: #41664e;
+            --green-soft: #e8eee7;
+            --amber: #8e642a;
+            --amber-soft: #f5eedf;
+            --red: #ad4134;
+            --red-soft: #f8e9e5;
+            --shadow: 0 12px 28px rgba(49, 43, 32, .07);
         }
 
         * { box-sizing: border-box; }
@@ -31,11 +31,9 @@
             min-width: 320px;
             min-height: 100vh;
             margin: 0;
-            background:
-                radial-gradient(ellipse at 12% 0%, rgba(218, 212, 255, .42), transparent 34rem),
-                var(--canvas);
+            background-color: var(--canvas);
             color: var(--ink);
-            font-family: Inter, "Segoe UI", Tahoma, sans-serif;
+            font-family: "Segoe UI", Tahoma, sans-serif;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -157,19 +155,6 @@
             box-shadow: 0 4px 16px rgba(37, 35, 72, .025);
         }
 
-        .stat-icon {
-            display: grid;
-            width: 42px;
-            height: 42px;
-            flex: 0 0 auto;
-            place-items: center;
-            border-radius: 13px;
-            background: var(--accent-soft);
-            font-size: 19px;
-        }
-
-        .stat-card:nth-child(2) .stat-icon { background: var(--amber-soft); }
-        .stat-card:nth-child(3) .stat-icon { background: var(--green-soft); }
         .stat-value { display: block; font-size: 23px; font-weight: 780; letter-spacing: -.8px; }
         .stat-label { display: block; margin-top: 2px; color: var(--muted); font-size: 12px; }
 
@@ -375,7 +360,6 @@
             .today-label { display: inline-block; margin-top: 14px; }
             .stats { gap: 8px; margin-bottom: 14px; }
             .stat-card { min-height: 80px; gap: 9px; padding: 12px 9px; border-radius: 13px; }
-            .stat-icon { width: 34px; height: 34px; border-radius: 10px; font-size: 16px; }
             .stat-value { font-size: 19px; }
             .stat-label { font-size: 10px; }
             .form-panel { padding: 19px; }
@@ -388,7 +372,272 @@
             .task-meta { gap: 4px 9px; }
         }
 
+        body {
+            background-color: var(--canvas);
+            background-image:
+                radial-gradient(rgba(74, 62, 42, .055) .55px, transparent .7px),
+                repeating-linear-gradient(0deg, transparent 0, transparent 35px, rgba(89, 106, 92, .055) 36px);
+            background-size: 7px 7px, 100% 36px;
+            color: var(--ink);
+            font-family: "Segoe UI", Tahoma, sans-serif;
+        }
+
+        .app-shell { width: min(1120px, calc(100% - 56px)); padding-top: 30px; }
+
+        .topbar {
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--line);
+            margin-bottom: 46px;
+        }
+
+        .brand { gap: 11px; }
+        .brand-mark {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--accent);
+            border-radius: 2px;
+            background: transparent;
+            color: var(--accent);
+            font-family: Georgia, serif;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: -.5px;
+            box-shadow: none;
+        }
+
+        .brand-name { font-family: Georgia, "Times New Roman", serif; font-size: 18px; font-weight: 700; }
+        .brand-caption { color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: 1.15px; }
+        .local-note { color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: .8px; }
+        .local-note::before { width: 7px; height: 7px; background: var(--green); }
+
+        .hero { align-items: flex-end; margin-bottom: 28px; }
+        .eyebrow {
+            margin-bottom: 13px;
+            color: var(--accent);
+            font-size: 10px;
+            font-weight: 750;
+            letter-spacing: 1.8px;
+        }
+
+        h1 {
+            max-width: 700px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(38px, 6vw, 58px);
+            font-weight: 500;
+            letter-spacing: -2.1px;
+            line-height: 1.02;
+        }
+
+        .hero-copy { max-width: 430px; margin-top: 14px; color: #67675d; font-size: 14px; }
+        .today-label {
+            padding: 11px 13px;
+            border: 1px solid #c9c0b1;
+            border-left: 3px solid var(--accent);
+            border-radius: 2px;
+            background: rgba(255, 253, 248, .58);
+            color: var(--ink);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .stats {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            margin-bottom: 25px;
+            padding: 14px 0;
+            border-top: 1px solid #cfc7b9;
+            border-bottom: 1px solid #cfc7b9;
+        }
+
+        .stat-card {
+            min-height: 56px;
+            gap: 11px;
+            padding: 6px 20px;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .stat-card + .stat-card { border-left: 1px solid #d5cec2; }
+        .stat-value {
+            color: var(--accent);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 32px;
+            font-weight: 500;
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+
+        .stat-label { color: var(--muted); font-size: 9px; font-weight: 750; letter-spacing: 1.15px; }
+
+        .workspace { grid-template-columns: minmax(270px, .75fr) minmax(0, 1.55fr); gap: 18px; }
+        .panel {
+            border: 1px solid #d8d1c5;
+            border-radius: 3px;
+            background: var(--surface);
+            box-shadow: 0 3px 10px rgba(49, 43, 32, .035);
+        }
+
+        .form-panel { padding: 23px; border-top: 3px solid var(--accent); }
+        .panel-heading {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 21px;
+            font-weight: 600;
+            letter-spacing: -.25px;
+        }
+
+        .panel-subtitle { margin: 7px 0 21px; color: var(--muted); font-size: 12px; }
+        .field { gap: 6px; margin-bottom: 13px; }
+        .field-label { color: #494a40; font-size: 11px; font-weight: 700; }
+        .optional, .field-hint { color: #898477; }
+        .field input, .field select, .search-input {
+            border-color: #d9d3c8;
+            border-radius: 2px;
+            background: #fffefa;
+            color: var(--ink);
+            font-family: "Segoe UI", Tahoma, sans-serif;
+            font-size: 12px;
+        }
+
+        .field input:focus, .field select:focus, .search-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(180, 73, 50, .12);
+        }
+
+        .field input::placeholder, .search-input::placeholder { color: #a39d91; }
+        .field-row { gap: 10px; }
+        .file-control::file-selector-button { border-radius: 2px; background: var(--accent-soft); color: var(--accent); }
+        .btn-add {
+            justify-content: space-between;
+            padding: 0 14px;
+            border-radius: 2px;
+            background: var(--accent);
+            font-size: 12px;
+            letter-spacing: .15px;
+        }
+
+        .btn-add span { font-size: 16px; }
+        .btn-add:hover { background: var(--accent-dark); }
+        .btn-add:focus-visible, .icon-button:focus-visible, .filter-button:focus-visible { outline-color: #bd7969; }
+        .task-panel { min-height: 388px; box-shadow: 0 7px 18px rgba(49, 43, 32, .045); }
+        .task-panel-header { padding: 22px 22px 14px; }
+        .task-count { color: var(--muted); font-size: 11px; }
+        .list-tools { margin-top: 14px; padding-top: 12px; border-top: 1px solid #e8e2d8; }
+        .filters { gap: 9px; }
+        .filter-button {
+            padding: 6px 1px;
+            border-radius: 0;
+            color: #777368;
+            font-size: 10px;
+            font-weight: 650;
+        }
+
+        .filter-button[aria-pressed="true"] {
+            border-bottom: 2px solid var(--accent);
+            background: transparent;
+            color: var(--accent);
+        }
+
+        .search-wrap { width: min(180px, 42%); }
+        .search-input { min-height: 32px; background: transparent; }
+        .search-wrap span { color: var(--accent); }
+        .task-list { gap: 0; padding: 0 20px 17px; }
+        .task-item {
+            grid-template-columns: 21px minmax(0, 1fr) auto;
+            gap: 10px;
+            padding: 15px 9px;
+            border: 0;
+            border-top: 1px solid #e8e2d8;
+            border-left: 2px solid transparent;
+            border-radius: 0;
+            background: transparent;
+            transition: border-color .16s ease, background .16s ease;
+        }
+
+        .task-item:hover { border-left-color: var(--accent); background: #fbf7f0; }
+        .task-item.is-completed { background: #fbfaf6; }
+        .task-check { accent-color: var(--green); }
+        .task-title { font-size: 14px; font-weight: 650; letter-spacing: .01em; }
+        .is-completed .task-title { color: #817f74; }
+        .task-meta { color: #777368; font-size: 11px; }
+        .task-tags { gap: 5px; margin-top: 8px; }
+        .tag {
+            padding: 3px 6px;
+            border: 1px solid #e2ddd2;
+            border-radius: 2px;
+            background: #f7f4ed;
+            color: #615f54;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .45px;
+        }
+
+        .tag.group { border-color: #e9c9c0; background: #fbf0ec; color: #984432; }
+        .tag.deadline { border-color: #e6d0c8; background: #f8eeea; color: #984432; }
+        .tag.overdue { border-color: #e5c4bc; background: #f8e9e5; color: #9c362b; }
+        .tag.soon { border-color: #e8d9b8; background: #f7f0e2; color: #79551f; }
+        .tag.attachment { border-color: #d7ddd2; background: #eef1e9; color: #4a6246; }
+        .icon-button { border-radius: 2px; color: #898477; }
+        .icon-button:hover { background: var(--red-soft); color: var(--red); }
+        .empty-state { padding: 43px 18px 48px; }
+        .empty-icon {
+            display: grid;
+            width: 38px;
+            height: 38px;
+            place-items: center;
+            margin: 0 auto 13px;
+            border: 1px solid #d7cdbd;
+            border-radius: 50%;
+            color: var(--accent);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 20px;
+        }
+
+        .empty-title { font-family: Georgia, "Times New Roman", serif; font-size: 17px; font-weight: 600; }
+        .empty-copy { color: var(--muted); font-size: 11px; }
+        .toast { border: 0; border-radius: 2px; background: var(--ink); box-shadow: 0 8px 20px rgba(38, 51, 46, .18); }
+
+        .hero { animation: settle-in .52s ease-out both; }
+        .stats { animation: settle-in .52s .08s ease-out both; }
+        .workspace { animation: settle-in .52s .16s ease-out both; }
+
+        @keyframes settle-in {
+            from { opacity: 0; transform: translateY(9px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 760px) {
+            .app-shell { width: min(100% - 32px, 620px); padding-top: 24px; }
+            .topbar { margin-bottom: 32px; }
+        }
+
+        @media (max-width: 520px) {
+            .app-shell { width: calc(100% - 24px); padding-top: 18px; }
+            .topbar { margin-bottom: 27px; }
+            .brand-mark { width: 36px; height: 36px; }
+            .local-note { max-width: 112px; font-size: 8px; letter-spacing: .4px; }
+            .hero { display: block; margin-bottom: 20px; }
+            h1 { font-size: clamp(38px, 11vw, 48px); }
+            .today-label { display: inline-block; margin-top: 14px; }
+            .stats { gap: 0; margin-bottom: 16px; padding: 10px 0; }
+            .stat-card { min-height: 54px; gap: 7px; padding: 6px 8px; border-radius: 0; }
+            .stat-value { font-size: 26px; }
+            .stat-label { font-size: 8px; letter-spacing: .55px; }
+            .form-panel { padding: 19px; }
+            .task-panel-header { padding: 19px 15px 13px; }
+            .list-tools { align-items: flex-start; flex-direction: column; gap: 9px; }
+            .search-wrap { width: 100%; }
+            .task-list { padding: 0 11px 12px; }
+            .task-item { grid-template-columns: 20px minmax(0, 1fr) auto; gap: 8px; padding: 13px 7px; }
+            .task-actions { flex-direction: column; }
+            .task-meta { gap: 4px 9px; }
+        }
+
         @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+            .hero, .stats, .workspace { animation: none; }
             *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
         }
     </style>
@@ -397,43 +646,43 @@
     <main class="app-shell">
         <header class="topbar">
             <a class="brand" href="#" aria-label="Ruang Tugas, beranda">
-                <span class="brand-mark" aria-hidden="true">✓</span>
+                <span class="brand-mark" aria-hidden="true">RT</span>
                 <span>
                     <span class="brand-name">Ruang Tugas</span>
-                    <span class="brand-caption">Student task planner</span>
+                    <span class="brand-caption">PENCATATAN KULIAH</span>
                 </span>
             </a>
-            <span class="local-note">Tersimpan di perangkat ini</span>
+            <span class="local-note">DATA TERSIMPAN DI PERANGKAT INI</span>
         </header>
 
         <section class="hero" aria-labelledby="page-title">
             <div>
-                <p class="eyebrow">Ruang belajar kamu</p>
+                <p class="eyebrow">RUANG TUGAS &nbsp; / &nbsp; CATATAN KULIAH</p>
                 <h1 id="page-title">Biar tugas lebih teratur.</h1>
-                <p class="hero-copy">Catat deadline, pantau progres, dan fokus menyelesaikan satu per satu.</p>
+                <p class="hero-copy">Satu tempat untuk mencatat deadline, kerja kelompok, dan progres kuliahmu.</p>
             </div>
             <div class="today-label" id="todayLabel"></div>
         </section>
 
         <section class="stats" aria-label="Ringkasan tugas">
             <article class="stat-card">
-                <span class="stat-icon" aria-hidden="true">📚</span>
-                <span><strong class="stat-value" id="totalCount">0</strong><span class="stat-label">Total tugas</span></span>
+                <strong class="stat-value" id="totalCount">0</strong>
+                <span class="stat-label">TOTAL TUGAS</span>
             </article>
             <article class="stat-card">
-                <span class="stat-icon" aria-hidden="true">⏳</span>
-                <span><strong class="stat-value" id="pendingCount">0</strong><span class="stat-label">Belum selesai</span></span>
+                <strong class="stat-value" id="pendingCount">0</strong>
+                <span class="stat-label">BELUM SELESAI</span>
             </article>
             <article class="stat-card">
-                <span class="stat-icon" aria-hidden="true">🎉</span>
-                <span><strong class="stat-value" id="completedCount">0</strong><span class="stat-label">Sudah selesai</span></span>
+                <strong class="stat-value" id="completedCount">0</strong>
+                <span class="stat-label">SUDAH SELESAI</span>
             </article>
         </section>
 
         <div class="workspace">
             <section class="panel form-panel" aria-labelledby="formTitle">
                 <h2 class="panel-heading" id="formTitle">Tambah tugas</h2>
-                <p class="panel-subtitle">Masukkan detail tugas supaya nggak ada yang terlewat.</p>
+                <p class="panel-subtitle">Catat yang penting. Biar pikiran tetap lega.</p>
                 <form id="taskForm">
                     <label class="field">
                         <span class="field-label">Nama tugas</span>
@@ -469,9 +718,9 @@
                     <label class="field">
                         <span class="field-label">Lampiran <span class="optional">(opsional)</span></span>
                         <input class="file-control" type="file" id="taskFile" name="taskFile">
-                        <span class="field-hint">Nama file akan dicatat; file tetap ada di perangkatmu.</span>
+                        <span class="field-hint">Nama file dicatat di sini; file aslinya tetap di perangkatmu.</span>
                     </label>
-                    <button class="btn-add" type="submit"><span aria-hidden="true">＋</span> Simpan tugas</button>
+                    <button class="btn-add" type="submit">Simpan tugas <span aria-hidden="true">↗</span></button>
                 </form>
             </section>
 
@@ -686,7 +935,7 @@
             tags.appendChild(createTag(task.type === 'Kelompok' ? 'Kelompok' : 'Individu', task.type === 'Kelompok' ? 'group' : ''));
             const deadlineState = getDeadlineState(task);
             if (deadlineState) tags.appendChild(createTag(deadlineState.label, deadlineState.className));
-            if (task.fileName) tags.appendChild(createTag(`📎 ${task.fileName}`, 'attachment'));
+            if (task.fileName) tags.appendChild(createTag(`FILE · ${task.fileName}`, 'attachment'));
             main.appendChild(tags);
 
             const actions = document.createElement('div');
@@ -745,7 +994,7 @@
                 empty.className = 'empty-state';
                 const icon = document.createElement('div');
                 icon.className = 'empty-icon';
-                icon.textContent = total === 0 ? '🗒️' : '🔎';
+                icon.textContent = total === 0 ? '—' : '!';
                 const title = document.createElement('h3');
                 title.className = 'empty-title';
                 title.textContent = total === 0 ? 'Belum ada tugas' : 'Tugasnya nggak ditemukan';
