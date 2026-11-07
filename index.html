@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Task Planner</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #fdfcf7; /* Warna background mirip slide */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 500px;
+        }
+        h2 {
+            text-align: center;
+            color: #ff4500; /* Orange sesuai judul text */
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            letter-spacing: -0.5px;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input {
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        input:focus {
+            border-color: #ff4500;
+        }
+        input[type="text"] {
+            flex: 2;
+        }
+        input[type="date"] {
+            flex: 1;
+        }
+        button.btn-add {
+            background: #ff4500;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        button.btn-add:hover {
+            background: #e03e00;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background: #fafafa;
+        }
+        li.completed .task-text strong {
+            text-decoration: line-through;
+            color: #999;
+        }
+        .task-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .task-text strong {
+            font-size: 1.1rem;
+            color: #333;
+        }
+        .task-date {
+            font-size: 0.85rem;
+            color: #777;
+            margin-top: 4px;
+        }
+        .actions button {
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 5px;
+            color: white;
+        }
+        .btn-done {
+            background: #4caf50;
+        }
+        .btn-done:hover { background: #43a047; }
+        .btn-del {
+            background: #f44336;
+        }
+        .btn-del:hover { background: #e53935; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>STUDENT TASK PLANNER</h2>
+        <div class="input-group">
+            <input type="text" id="taskName" placeholder="Nama tugas (ex: Kalkulus)..." autocomplete="off">
+            <input type="date" id="taskDate">
+            <button class="btn-add" onclick="addTask()">Tambah</button>
+        </div>
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        function addTask() {
+            const nameInput = document.getElementById('taskName');
+            const dateInput = document.getElementById('taskDate');
+            const name = nameInput.value.trim();
+            const date = dateInput.value;
+            
+            if (!name) {
+                alert('Isi nama tugasnya dulu bre!');
+                return;
+            }
+
+            const li = document.createElement('li');
+            
+            // Container info tugas
+            const info = document.createElement('div');
+            info.className = 'task-info task-text';
+            
+            // Format tanggal jadi lebih rapi kalau diisi
+            let dateText = 'Tanpa deadline';
+            if(date) {
+                const d = new Date(date);
+                dateText = `Deadline: ${d.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}`; }  info.innerHTML = `<strong>${name}</strong><span class="task-date">\${dateText}</span>`;
+            
+            // Container tombol
+            const actions = document.createElement('div');
+            actions.className = 'actions';
+            
+            const btnDone = document.createElement('button');
+            btnDone.innerText = '✔';
+            btnDone.className = 'btn-done';
+            btnDone.onclick = function() {
+                li.classList.toggle('completed');
+            };
+            
+            const btnDel = document.createElement('button');
+            btnDel.innerText = '✖';
+            btnDel.className = 'btn-del';
+            btnDel.onclick = function() {
+                li.remove();
+            };
+            
+            actions.appendChild(btnDone);
+            actions.appendChild(btnDel);
+            
+            li.appendChild(info);
+            li.appendChild(actions);
+            
+            document.getElementById('taskList').appendChild(li);
+            
+            // Reset input
+            nameInput.value = '';
+            dateInput.value = '';
+            nameInput.focus();
+        }
+    </script>
+</body>
+</html>
