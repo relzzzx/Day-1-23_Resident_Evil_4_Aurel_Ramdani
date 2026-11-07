@@ -16,13 +16,13 @@ Tujuan dari repository ini adalah:
 Berikut adalah dokumentasi dan catatan pembelajaran selama Day 1:
 
 ### 1. Rangkuman Materi
-- **Prompt Engineering**: Merupakan cara merancang instruksi agar AI memberikan jawaban yang tepat dan relevan[cite: 12]. Struktur prompt yang baik terdiri dari *Role, Task, Context,* dan *Format*[cite: 15].
-- **Git vs GitHub**: Git adalah sistem version control terdistribusi untuk melacak perubahan kode secara lokal, sedangkan GitHub adalah platform berbasis web untuk menyimpan repository Git secara daring dan berkolaborasi[cite: 22].
-- **Alur Kerja Git**: Terdiri dari 3 tahap utama yaitu *Working Directory* (tempat memodifikasi file), *Staging Area* (tempat menyimpan info perubahan sebelum di-commit), dan *Git Directory/Repository* (tempat menyimpan metadata dan database)[cite: 21].
+- **Prompt Engineering**: Merupakan cara merancang instruksi agar AI memberikan jawaban yang tepat dan relevan. Struktur prompt yang baik terdiri dari *Role, Task, Context,* dan *Format*.
+- **Git vs GitHub**: Git adalah sistem version control terdistribusi untuk melacak perubahan kode secara lokal, sedangkan GitHub adalah platform berbasis web untuk menyimpan repository Git secara daring dan berkolaborasi.
+- **Alur Kerja Git**: Terdiri dari 3 tahap utama yaitu *Working Directory* (tempat memodifikasi file), *Staging Area* (tempat menyimpan info perubahan sebelum di-commit), dan *Git Directory/Repository* (tempat menyimpan metadata dan database).
 - **Perintah Dasar Git**: 
-  - `git init` untuk memulai repo baru[cite: 23].
-  - `git add .` untuk memindahkan file ke staging area[cite: 23].
-  - `git commit -m 'message'` untuk menyimpan file ke repository[cite: 23].
+  - `git init` untuk memulai repo baru.
+  - `git add .` untuk memindahkan file ke staging area.
+  - `git commit -m 'message'` untuk menyimpan file ke repository.
   - `git push` untuk mengirim kode ke GitHub.
 
 ### 2. Poin Penting / Pengetahuan Baru
