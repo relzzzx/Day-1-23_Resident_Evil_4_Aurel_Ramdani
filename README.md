@@ -32,3 +32,5 @@ Berikut adalah dokumentasi dan catatan pembelajaran selama Day 1:
 
 ### 3. Pendapat Pribadi tentang Day 1
 Kegiatan Day 1 sangat seru dan membuka wawasan baru. Saya jadi tahu bahwa menggabungkan bantuan AI dengan manajemen kontrol versi (GitHub) dapat mempercepat alur kerja pembuatan sebuah aplikasi secara drastis. Penjelasannya mudah dipahami dan bisa langsung dipraktikkan.
+
+<img width="576" height="503" alt="{801FB6E9-4EAE-4414-B88C-C63BC6C25FA0}" src="https://github.com/user-attachments/assets/a764489d-d785-4998-9075-c587370519c5" />
