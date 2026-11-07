@@ -153,7 +153,7 @@
             let dateText = 'Tanpa deadline';
             if(date) {
                 const d = new Date(date);
-                dateText = `Deadline: ${d.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}`; }  info.innerHTML = `<strong>${name}</strong><span class="task-date">\${dateText}</span>`;
+                dateText = `Deadline: ${d.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}`; }  info.innerHTML = `<strong>${name}</strong><span class="task-date">${dateText}</span>`;
             
             // Container tombol
             const actions = document.createElement('div');
